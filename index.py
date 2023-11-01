@@ -1,3 +1,13 @@
+import os
+import pandas as pd
+import openpyxl
+
+# Read the Excel file
+orders = pd.read_excel(r"C:\Users\simba\OneDrive\project.xlsx", engine='openpyxl')
+
+# Print the content of the Excel file
+print(orders)
+
 # List of available ice cream flavors
 ice_cream_flavors = [
     "Vanilla",
@@ -26,8 +36,11 @@ toppings = [
     "Gummy Bears",
 ]
 
+total_orders = 0
+
 def serve_ice_cream(flavor, chosen_toppings, scoops):
-    """Serve ice cream with the specified flavor, toppings, and number of scoops."""
+    global total_orders
+    total_orders += 1
     if scoops < 1:
         return "Sorry, we can't serve less than 1 scoop of ice cream."
     elif scoops > 3:
@@ -37,27 +50,66 @@ def serve_ice_cream(flavor, chosen_toppings, scoops):
         return "Sorry, you can't choose the same topping more than once."
 
     if scoops == 1:
-        message = f"Here is your {flavor} ice cream with {', '.join(chosen_toppings)}. Enjoy!"
+        message = f"Here is your {flavor} ice cream with {', '.join(chosen_toppings)}. Enjoy!\n Now enter in the number 4 so you can view your total cost."
     elif scoops == 2:
-        # Use 'and' to separate the last two toppings
-        message = f"Here are your two scoops of {flavor} ice cream with {', '.join(chosen_toppings[:-1])} and {chosen_toppings[-1]}. Enjoy!"
-    else:
-        # Use 'and' to separate the last two toppings
+        message = f"Here are your two scoops of {flavor} ice cream with {', '.join(chosen_toppings[:-1])} and {chosen_toppings[-1]}. Enjoy!\n Now press the number 4 so you can view, and pay your total cost."
+    elif scoops == 3:
         toppings_except_last = ', '.join(chosen_toppings[:-1])
         last_topping = chosen_toppings[-1]
-        message = f"Here are your three scoops of {flavor} ice cream with {toppings_except_last}, and {last_topping}. Enjoy!"
+        message = f"Here are your three scoops of {flavor} ice cream with {toppings_except_last}, and {last_topping}. Enjoy!\n Now press the number 4 so you can view, and pay your total cost."
 
     return message
+
+def display_total_orders():
+    global total_orders
+    if total_orders == 1:
+        print("We've served a total of 1 order here at Spartans Ice Cream Shop.")
+    else:
+        print(f"We've served a total of {total_orders} orders here at Spartans Ice Cream Shop.")
+
+def view_menu():
+    print("Available ice cream flavors:")
+    for index, flavor in enumerate(ice_cream_flavors, start=1):
+        print(f"{index}. {flavor}")
+    print("\n Available toppings:")
+    for index, topping in enumerate(toppings, start=1):
+        print(f"{index}. {topping}")
+
+def calculate_total_price(flavor, chosen_toppings, scoops):
+    flavor_price = 3.00
+    topping_price = 0.50
+    total_price = (flavor_price + len(chosen_toppings) * topping_price) * scoops
+    return total_price
+
+# Initialize an empty DataFrame to store orders
+orders = pd.DataFrame(columns=["Customer Name", "Flavor", "Toppings", "Scoops", "Total Price"])
+
+# Add the function to save orders to Excel
+def save_orders_to_excel():
+    try:
+        # Save the orders to the Excel file with the local file path
+        orders.to_excel(r"C:\Users\simba\OneDrive\Desktop\project.xlsx", index=False, engine='openpyxl')
+        print("Orders have been saved to the local Excel file.")
+    except Exception as e:
+        print(f"Error while saving to Excel: {str(e)}")
 
 
 
 def main():
+    global orders  # Declare 'orders' as a global variable
+
     customer_name = input('Welcome to Spartans Ice Cream Shop! Please enter your name: ')
     print(f'Hello {customer_name}! Here is our menu:')
+    
+    # Initialize a flag to track whether an order has been placed
+    order_placed = False
 
     while True:
         print('1. Order Ice Cream')
         print('2. Exit')
+        print('3. View Menu')
+        print('4. Calculate Total Price')
+        print('5. View the total number of orders placed')
 
         choice = input('Enter your choice: ')
         if choice == '1':
@@ -98,14 +150,43 @@ def main():
                 print("Invalid number of scoops. Please select 1, 2, or 3.")
                 continue  # Continue the loop to re-enter the choice
 
+            # Set the flag to True after placing an order
+            order_placed = True
+
+            # Calculate the total price
+            total_price = calculate_total_price(flavor, chosen_toppings, scoops)
+
+            # Get order details
+            order_data = {
+                "Customer Name": customer_name,
+                "Flavor": flavor,
+                "Toppings": ", ".join(chosen_toppings),
+                "Scoops": scoops,
+                "Total Price": total_price
+            }
+
+            # Append the order to the DataFrame
+            orders = pd.concat([orders, pd.DataFrame(order_data, index=[0])], ignore_index=True)
+
             message = serve_ice_cream(flavor, chosen_toppings, scoops)
             print(message)
 
         elif choice == '2':
             print(f"Thank you, {customer_name}, for visiting Spartans Ice Cream Shop. Have a great day!")
+            save_orders_to_excel()  # Save orders when exiting
             break
+        elif choice == '3':
+            view_menu()
+        elif choice == '4':
+            if order_placed:
+                total_price = calculate_total_price(flavor, chosen_toppings, scoops)
+                print(f"Your total price is ${total_price:.2f}")
+            else:
+                print("Please order your ice cream first before you attempt to calculate your total price.")
+        elif choice == '5':
+            display_total_orders()
         else:
-            print("Invalid choice. Please select a valid option (1/2).")
+            print("Invalid choice. Please select a valid option from the selection: (1/2/3/4/5).")
 
 if __name__ == "__main__":
     main()
