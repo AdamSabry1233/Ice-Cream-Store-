@@ -1,12 +1,6 @@
-import os
+
 import pandas as pd
-import openpyxl
 
-# Read the Excel file
-orders = pd.read_excel(r"C:\Users\simba\OneDrive\project.xlsx", engine='openpyxl')
-
-# Print the content of the Excel file
-print(orders)
 
 # List of available ice cream flavors
 ice_cream_flavors = [
@@ -86,19 +80,39 @@ orders = pd.DataFrame(columns=["Customer Name", "Flavor", "Toppings", "Scoops", 
 
 # Add the function to save orders to Excel
 def save_orders_to_excel():
+    global orders
     try:
-        # Save the orders to the Excel file with the local file path
-        orders.to_excel(r"C:\Users\simba\OneDrive\Desktop\project.xlsx", index=False, engine='openpyxl')
-        print("Orders have been saved to the local Excel file.")
-    except Exception as e:
-        print(f"Error while saving to Excel: {str(e)}")
+        existing_orders = pd.read_excel("Inventory.xlsx", engine='openpyxl')
+        updated_orders = pd.concat([existing_orders, orders], ignore_index=True)
+        updated_orders.to_excel("Inventory.xlsx", index=False, engine='openpyxl')
+        print("Orders have been saved to the 'Inventory.xlsx' file.")
+    except FileNotFoundError:
+        # If the file is not found, create a new Excel file
+        orders.to_excel("Inventory.xlsx", index=False, engine='openpyxl')
+        print("Orders have been saved to the 'Inventory.xlsx' file.")
 
+# Replace the original save_orders_to_excel() function with this modified one.
+
+def is_name_valid(name):
+    return name.isalpha()
 
 
 def main():
     global orders  # Declare 'orders' as a global variable
+    
+    try:
+       orders = pd.read_excel("Inventory.xlsx", engine='openpyxl')
+    except FileNotFoundError:
+       # If the file is not found, create an empty DataFrame
+       orders = pd.DataFrame(columns=["Customer Name", "Flavor", "Toppings", "Scoops", "Total Price"])
+    
+
 
     customer_name = input('Welcome to Spartans Ice Cream Shop! Please enter your name: ')
+    while not is_name_valid(customer_name):
+        print("Invalid name. Please enter in a name containing letters.")
+        customer_name = input("Please re-enter in your name: ")
+    
     print(f'Hello {customer_name}! Here is our menu:')
     
     # Initialize a flag to track whether an order has been placed
@@ -189,4 +203,6 @@ def main():
             print("Invalid choice. Please select a valid option from the selection: (1/2/3/4/5).")
 
 if __name__ == "__main__":
+    # Print the content of the Excel file
+    print(orders)
     main()
