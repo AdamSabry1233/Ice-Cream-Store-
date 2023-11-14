@@ -1,6 +1,6 @@
 import appJar as aj
 import pandas as pd
-
+#Adam
 # List of available ice cream flavors
 ice_cream_flavors = [
     "Vanilla",
@@ -33,6 +33,7 @@ total_orders = 0
 orders = pd.DataFrame(columns=["Name", "Flavor", "Scoops", "Toppings", "Total Price"])
 
 # Function to serve ice cream by: Adam Sabry, Bryan Phu, Nyan Win Moe, Brandon Ngo
+#Bryan
 def serve_ice_cream(flavor, chosen_toppings, scoops):
     global total_orders
     total_orders += 1
@@ -61,7 +62,7 @@ app = aj.gui("Spartans Ice Cream Shop", "400x400")
 # Set background colors
 app.setBg("lightblue")
 
-#App additions by Bryan Phu
+#App additions by Moe
 # Add labels and widgets to the GUI
 app.addLabel("lbl_name", "1. Please enter your name:")
 app.addLabelEntry("Name")
@@ -114,7 +115,7 @@ def button_click(button):
                 app.infoBox("Order Placed", message)  # Display the order message
 
     # Add the rest of your button handlers here...
-
+#Bryan
 # Add the buttons, including "Order Ice Cream": By Adam Sabry, Nyan Win Moe, Bryan Phu
 app.addButtons(["Order Ice Cream", "View Menu", "Calculate Total Price", "View Total Orders", "Exit"], button_click)
 
