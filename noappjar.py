@@ -97,6 +97,7 @@ def is_name_valid(name):
     return name.isalpha()
 
 #Main Function by: Adam Sabry, Bryan Phu, Brandon Ngo, and Nyan Win Moe
+#Bryan
 def main():
     global orders  # Declare 'orders' as a global variable
     
@@ -117,7 +118,7 @@ def main():
     
     # Initialize a flag to track whether an order has been placed
     order_placed = False
-
+#Brandon
     while True:
         print('1. Order Ice Cream')
         print('2. Exit')
@@ -146,7 +147,7 @@ def main():
             print("Available toppings:")
             for index, topping in enumerate(toppings, start=1):
                 print(f"{index}. {topping}")
-
+#Moe
             try:
                 topping_choices = input("Enter topping numbers separated by spaces: ")
                 topping_indices = [int(choice) for choice in topping_choices.split()]
@@ -184,7 +185,7 @@ def main():
 
             message = serve_ice_cream(flavor, chosen_toppings, scoops)
             print(message)
-
+#Adam
         elif choice == '2':
             print(f"Thank you, {customer_name}, for visiting Spartans Ice Cream Shop. Have a great day!")
             save_orders_to_excel()  # Save orders when exiting
