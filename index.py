@@ -32,7 +32,7 @@ toppings = [
 total_orders = 0
 orders = pd.DataFrame(columns=["Name", "Flavor", "Scoops", "Toppings", "Total Price"])
 
-# Function to serve ice cream
+# Function to serve ice cream by: Adam Sabry, Bryan Phu, Nyan Win Moe, Brandon Ngo
 def serve_ice_cream(flavor, chosen_toppings, scoops):
     global total_orders
     total_orders += 1
@@ -61,6 +61,7 @@ app = aj.gui("Spartans Ice Cream Shop", "400x400")
 # Set background colors
 app.setBg("lightblue")
 
+#App additions by Bryan Phu
 # Add labels and widgets to the GUI
 app.addLabel("lbl_name", "1. Please enter your name:")
 app.addLabelEntry("Name")
@@ -73,7 +74,7 @@ app.addLabel("lbl_toppings", "4. Select Toppings: \n(FYI press the ctrl key as y
 app.addListBox("Toppings", toppings)
 app.setListBoxMulti("Toppings")
 
-# Function to handle button clicks
+# Function to handle button clicks: By Brandon Ngo
 def button_click(button):
     if button == "Order Ice Cream":
         customer_name = app.getEntry("Name")
@@ -99,7 +100,7 @@ def button_click(button):
                 # Serve ice cream and display the order
                 message = serve_ice_cream(flavor, topping_indices, scoops)
 
-                # Add the order to the orders DataFrame
+                # Add the order to the orders DataFrame by: Nyan Win Moe 
                 global orders
                 orders = orders.append({
                     "Name": customer_name,
@@ -114,7 +115,7 @@ def button_click(button):
 
     # Add the rest of your button handlers here...
 
-# Add the buttons, including "Order Ice Cream"
+# Add the buttons, including "Order Ice Cream": By Adam Sabry, Nyan Win Moe, Bryan Phu
 app.addButtons(["Order Ice Cream", "View Menu", "Calculate Total Price", "View Total Orders", "Exit"], button_click)
 
 # Start the GUI

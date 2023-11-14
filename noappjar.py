@@ -2,7 +2,7 @@
 import pandas as pd
 
 
-# List of available ice cream flavors
+# List of available ice cream flavors: By Adam Sabry
 ice_cream_flavors = [
     "Vanilla",
     "Chocolate",
@@ -16,7 +16,7 @@ ice_cream_flavors = [
     "Pistachio",
 ]
 
-# List of available toppings
+# List of available toppings: By Adam Sabry
 toppings = [
     "Chocolate Sauce",
     "Caramel Sauce",
@@ -31,7 +31,7 @@ toppings = [
 ]
 
 total_orders = 0
-
+# Ice cream serving funciton by: Adam Sabry
 def serve_ice_cream(flavor, chosen_toppings, scoops):
     global total_orders
     total_orders += 1
@@ -53,14 +53,14 @@ def serve_ice_cream(flavor, chosen_toppings, scoops):
         message = f"Here are your three scoops of {flavor} ice cream with {toppings_except_last}, and {last_topping}. Enjoy!\n Now press the number 4 so you can view, and pay your total cost."
 
     return message
-
+#Displaying order function by: Bryan Phu
 def display_total_orders():
     global total_orders
     if total_orders == 1:
         print("We've served a total of 1 order here at Spartans Ice Cream Shop.")
     else:
         print(f"We've served a total of {total_orders} orders here at Spartans Ice Cream Shop.")
-
+#View menu function by: Nyan Win Moe
 def view_menu():
     print("Available ice cream flavors:")
     for index, flavor in enumerate(ice_cream_flavors, start=1):
@@ -68,17 +68,17 @@ def view_menu():
     print("\n Available toppings:")
     for index, topping in enumerate(toppings, start=1):
         print(f"{index}. {topping}")
-
+#This function calculates the total price by: Brandon Ngo
 def calculate_total_price(flavor, chosen_toppings, scoops):
     flavor_price = 3.00
     topping_price = 0.50
     total_price = (flavor_price + len(chosen_toppings) * topping_price) * scoops
     return total_price
 
-# Initialize an empty DataFrame to store orders
+# Initialize an empty DataFrame to store orders by: Bryan Phu
 orders = pd.DataFrame(columns=["Customer Name", "Flavor", "Toppings", "Scoops", "Total Price"])
 
-# Add the function to save orders to Excel
+# Add the function to save orders to Excel by: Adam Sabry
 def save_orders_to_excel():
     global orders
     try:
@@ -91,12 +91,12 @@ def save_orders_to_excel():
         orders.to_excel("Inventory.xlsx", index=False, engine='openpyxl')
         print("Orders have been saved to the 'Inventory.xlsx' file.")
 
-# Replace the original save_orders_to_excel() function with this modified one.
+# Replace the original save_orders_to_excel() function with this modified one by: Brandon Ngo 
 
 def is_name_valid(name):
     return name.isalpha()
 
-
+#Main Function by: Adam Sabry, Bryan Phu, Brandon Ngo, and Nyan Win Moe
 def main():
     global orders  # Declare 'orders' as a global variable
     
