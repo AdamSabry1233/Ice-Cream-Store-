@@ -285,14 +285,16 @@ app.setBg("lightblue")
 
 # App additions by Moe
 # Add labels and widgets to the GUI
+app.addImage("decor","giphy.gif")
+app.setFont(18)
 app.addLabel("lbl_name", "1. Please enter your name:")
 app.addLabelEntry("Name")
-app.addLabel("lbl_flavor", "2. Select flavor:")
+app.addLabel("lbl_flavor", "2. Select flavor: (price per flavor $3.00)")
 app.addOptionBox("Flavor", ice_cream_flavors)
 app.setOptionBoxBg("Flavor", "white")  # Set background color for the option box
-app.addLabel("lbl_scoops", "3. Select amount of scoops (1-3):")
+app.addLabel("lbl_scoops", "3. Select amount of scoops (1-3): (price is multiplied by total scoops)")
 app.addSpinBox("Scoops", [1, 2, 3])
-app.addLabel("lbl_toppings", "4. Select Toppings: \n(Press the ctrl key as you select them in order to select multiple toppings)")
+app.addLabel("lbl_toppings", "4. Select Toppings: ($0.50 per topping) \n(Press the ctrl key as you select them in order to select multiple toppings)")
 app.addListBox("Toppings", toppings)
 app.setListBoxMulti("Toppings")
 
