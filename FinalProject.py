@@ -285,6 +285,7 @@ app.setBg("lightblue")
 
 # App additions by Moe
 # Add labels and widgets to the GUI
+app.addLabel("lbl_title", "Spartans Ice Cream Shop")
 app.addImage("decor","giphy.gif")
 app.setFont(18)
 app.addLabel("lbl_name", "1. Please enter your name:")
